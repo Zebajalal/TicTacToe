@@ -1,5 +1,8 @@
+.reset-button:hover {
+  text-align: center;
+}
 .game {
-  display: flex;
+  display: center;
   flex-direction: column;
   align-items: center;
   margin-top: 40px;
@@ -44,4 +47,13 @@
   cursor: pointer;
 }
 
-.reset-button:hover
+.reset-button:hover {
+  text-align: center;
+}
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+

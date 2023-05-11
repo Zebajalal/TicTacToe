@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+
+
 function TicTacToe() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [player, setPlayer] = useState("X");
@@ -43,36 +45,41 @@ function TicTacToe() {
   const isTied = board.every((square) => square !== null) && !winner;
 
   return (
-    <div>
-      {winner ? (
+    <div className="container">
+      <div className="d-flex justify-content-center">
         <div>
-          <div>Winner: {winner}</div>
-          <button onClick={handleReset}>Play Again</button>
+        < h1>TicTacToe Game</h1>
+          {winner ? (
+            <div>
+              <div className="m-3">Winner: {winner}</div>
+              <button className="btn btn-primary" onClick={handleReset}>Play Again</button>
+            </div>
+          ) : isTied ? (
+            <div>
+              <div>It's a tie!</div>
+              <button className="btn btn-danger" onClick={handleReset}>Play Again</button>
+            </div>
+          ) : (
+            <div>
+              <div className="board-row">
+                {renderSquare(0)}
+                {renderSquare(1)}
+                {renderSquare(2)}
+              </div>
+              <div className="board-row">
+                {renderSquare(3)}
+                {renderSquare(4)}
+                {renderSquare(5)}
+              </div>
+              <div className="board-row">
+                {renderSquare(6)}
+                {renderSquare(7)}
+                {renderSquare(8)}
+              </div>
+            </div>
+          )}
         </div>
-      ) : isTied ? (
-        <div>
-          <div>It's a tie!</div>
-          <button onClick={handleReset}>Play Again</button>
-        </div>
-      ) : (
-        <div>
-          <div className="board-row">
-            {renderSquare(0)}
-            {renderSquare(1)}
-            {renderSquare(2)}
-          </div>
-          <div className="board-row">
-            {renderSquare(3)}
-            {renderSquare(4)}
-            {renderSquare(5)}
-          </div>
-          <div className="board-row">
-            {renderSquare(6)}
-            {renderSquare(7)}
-            {renderSquare(8)}
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 
