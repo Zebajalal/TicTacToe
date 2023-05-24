@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 
-
-
 function TicTacToe() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [player, setPlayer] = useState("X");
+  const [history, setHistory] = useState([]);
 
   const handleClick = (index) => {
     const newBoard = [...board];
     if (newBoard[index] === null) {
       newBoard[index] = player;
       setBoard(newBoard);
-      setPlayer(player === "X" ? "O" : "X");
+      setPlayer((prevPlayer) => (prevPlayer === "X" ? "O" : "X"));
+
+      const move = {
+        player: player,
+        index: index,
+        value: player === "X" ? "X" : "O"
+      };
+
+      setHistory([...history.slice(0, index), move]);
     }
   };
 
@@ -24,7 +31,7 @@ function TicTacToe() {
       [1, 4, 7],
       [2, 5, 8],
       [0, 4, 8],
-      [2, 4, 6],
+      [2, 4, 6]
     ];
     for (let i = 0; i < lines.length; i++) {
       const [a, b, c] = lines[i];
@@ -40,6 +47,7 @@ function TicTacToe() {
   const handleReset = () => {
     setBoard(Array(9).fill(null));
     setPlayer("X");
+    setHistory([]);
   };
 
   const isTied = board.every((square) => square !== null) && !winner;
@@ -48,16 +56,20 @@ function TicTacToe() {
     <div className="container">
       <div className="d-flex justify-content-center">
         <div>
-        < h1>TicTacToe Game</h1>
+          <h1>TicTacToe Game</h1>
           {winner ? (
             <div>
               <div className="m-3">Winner: {winner}</div>
-              <button className="btn btn-primary" onClick={handleReset}>Play Again</button>
+              <button className="btn btn-primary" onClick={handleReset}>
+                Play Again
+              </button>
             </div>
           ) : isTied ? (
             <div>
               <div>It's a tie!</div>
-              <button className="btn btn-danger" onClick={handleReset}>Play Again</button>
+              <button className="btn btn-danger" onClick={handleReset}>
+                Play Again
+              </button>
             </div>
           ) : (
             <div>
@@ -78,6 +90,21 @@ function TicTacToe() {
               </div>
             </div>
           )}
+
+          <div className="history">
+            <h3>Game History</h3>
+            <ul>
+              {history.map((move, index) => (
+                <li
+                  key={index}
+                  onClick={() => setHistory(history.slice(0, index + 1))}
+                >
+                  Player {move.player} moved at index {move.index} -{" "}
+                  {move.value}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>
